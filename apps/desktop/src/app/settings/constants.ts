@@ -1,6 +1,7 @@
 import {
   Box,
   Brain,
+  Globe,
   type IconComponent,
   Lock,
   MessageCircle,
@@ -426,7 +427,8 @@ export const FIELD_LABELS: Record<string, string> = defineFieldCopy({
   },
   browser: {
     allowPrivateUrls: 'URLs Privadas no Navegador',
-    autoLocalForPrivateUrls: 'Navegador Local para URLs Privadas'
+    autoLocalForPrivateUrls: 'Navegador Local para URLs Privadas',
+    useRealProfile: 'Usar Meu Perfil Real do Navegador'
   },
   checkpoints: {
     enabled: 'Checkpoints de Arquivos',
@@ -554,6 +556,10 @@ export const FIELD_DESCRIPTIONS: Record<string, string> = defineFieldCopy({
     repoScanExcludePaths: 'Pastas ignoradas durante a descoberta de repositórios.'
   },
   timezone: 'Identificador de fuso horário IANA. Vazio usa o do sistema.',
+  browser: {
+    useRealProfile:
+      'Navegação local usa seus logins reais. O Hermes copia o perfil do seu navegador padrão (cookies, logins, preferências) para um snapshot gerenciado e o utiliza com o Chromium embutido — seu perfil ativo nunca é aberto diretamente, e a cópia é atualizada a cada execução. Também permite que o agente abra uma sessão local com perfil real mesmo quando um navegador na nuvem está configurado. Apenas navegadores Chromium (Chrome, Edge, Brave, Chromium) são suportados; um navegador padrão não-Chromium falha com uma mensagem clara. Desativado por padrão.'
+  },
   agent: {
     imageInputMode: 'Controls how image attachments are sent to the model.',
     maxTurns: 'Upper bound for tool-calling turns before Hermes stops a run.'
@@ -667,10 +673,14 @@ export const SECTIONS: DesktopConfigSection[] = [
       'command_allowlist',
       'security.redact_secrets',
       'security.allow_private_urls',
-      'browser.allow_private_urls',
-      'browser.auto_local_for_private_urls',
       'checkpoints.enabled'
     ]
+  },
+  {
+    id: 'browser',
+    label: 'Browser',
+    icon: Globe,
+    keys: ['browser.use_real_profile', 'browser.allow_private_urls', 'browser.auto_local_for_private_urls']
   },
   {
     id: 'memory',
